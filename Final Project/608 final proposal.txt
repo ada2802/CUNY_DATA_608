@@ -1,0 +1,19 @@
+608 Data Visualization - Final Project Proposal
+
+1. Data source
+I will use the flowing data of Yahoo finance stock history price in my data set.
+For example: GE stock price
+https://finance.yahoo.com/quote/ge/history/
+
+2. What I want to show
+I would like to show stock history price like the sample from Bloomberg.
+https://www.bloomberg.com/markets/stocks
+
+3. Why this is relevant to a current business
+The stock price is the most relevant the business status of a company and also reflected to people estepectation of the economic. 
+
+4. Which technologies I plan to use
+a. use R/Python web scripting data from Yahoo
+b. use query to select open and close price
+c. use shiny or dash app to present data graph
+d. apply tooltips in data graphs
