@@ -1,0 +1,44 @@
+Dash app
+
+1) install dash
+Open Anaconda prompt Run as Administrator
+pip install dash==0.28.5 
+pip install dash-html-components==0.13.2 
+pip install dash-core-components==0.34.0  
+2) try the app.py
+download the app.py
+3) Use spyder to open app.py and run this file. 
+4) use browser to open "http://127.0.0.1:8050/"
+
+
+pip install dash-renderer dash-html-components dash-core-components
+pip install dash-core-components==0.15.0rc1
+
+query code
+https://data.cityofnewyork.us/resource/nwxe-4ae8.json?$select=spc_common,count(spc_common)&$where=health%20in('Fair')&$group=spc_common
+
+Q1 
+https://data.cityofnewyork.us/resource/nwxe-4ae8.json?$select=health,spc_common,count(spc_common)&$group=health,spc_common
+
+Q2
+https://data.cityofnewyork.us/resource/nwxe-4ae8.json?$select=steward,health,count(health)&$group=steward,health
+
+
+Socrates:
+
+https://dev.socrata.com/docs/functions/count.html
+The count(...) function is most commonly used in $select aggregations to return the count of a set of values. For example, to fetch the total number of employees of the City of Chicago:
+https://data.cityofchicago.org/resource/tt4n-kn4t.json?$select=count(annual_salary)
+It can also be used in $group aggregations, like this one to get the count of employees by job type:
+https://data.cityofchicago.org/resource/tt4n-kn4t.json?$select=position_title,count(annual_salary)&$group=position_title
+
+We need to Change the dataset 
+
+Try the following 
+"https://data.cityofchicago.org/resource/uvpi-gqnh.json?$select=spc_common,count(spc_common)&$group=spc_common"
+
+ 
+
+
+
+
