@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <h1>608 HW5</h1>
+    <head>
+            <style>
+            table, th, td {
+              border: 1px solid black;
+              border-collapse: collapse;
+            }
+            </style>
+    </head>
+<body>
+
+<p>Q1: Create a function to reverse any word that you type in. This can be typed into either an input box or an alert box, and then print the result in a box or on the webpage. </p>
+        
+<p>Answer: Click the button to display a reverse words which will ask for your words.</p>
+    
+
+<button onclick="reverseInPlace()">Try it</button>
+
+<p id="demo"></p>
+<br>
+<p>Q2: Create a function that takes an input number, and prints a table with the first 20 multiples of the number, in order 5x4</p>
+
+<p>Answer: </p>
+<form action="/js_in_webpage.html"><input type=number name="num" value=NULL><br><br>
+    <input type="submit" value="Submit"></form>
+
+
+<script>
+function reverseInPlace() {
+    var words = [];
+    var text = prompt("Enter words: ");
+    words = text.match(/\S+/g);
+    var result = "";
+    for (var i = 0; i < words.length; i++) {
+        result += words[i].split('').reverse().join('') + " ";
+    }
+    document.getElementById("demo").innerHTML = result;
+    }
+
+let table = document.getElementById("table");
+function generate5x4table(num){
+    //create an array to store 20 numbers
+    var numarry = new Array(20);
+    for(var i = 0; i < numarry.length; i++){
+        numarry.push(i*num);}
+    
+    for(var rowNumber = 0; rowNumber < 5; rowNumber++){
+        for(var colNumeber = 0; colNumeber < 4; colNumeber++){
+            let rowString = "<tr>";
+            numarry.forEach((td, index)=>{
+            rowString += `<td>${numarry[index]}</td>`;});
+            rowString += "</tr>"
+            return rowString;
+        }
+    }
+        
+    //function to generate a row.
+    const rowTemplate = (numarry, rowNumber) =>{
+        let rowString = "<tr>";
+        numarry.forEach((td, index)=>{
+            rowString += `<td>${numarry[index]}</td>`;});
+        rowString += "</tr>"
+        return rowString;
+    };
+    
+    //function to generate all the rows
+    const generateRows = (numarry, elementToPopulate) => {
+        let htmlString = "";
+        data.forEach((row,index)=>{
+            htmlString += rowTemplate(row, index);
+        });
+        elementToPopulate.innerHTML = htmlString;
+    }
+
+    //call method
+    generateRows(numarry, table);
+
+
+}
+
+
+</script>
+
+<table width="100%" border="1" id="table"></table>
+      
+
+
+</body>
+</html>
