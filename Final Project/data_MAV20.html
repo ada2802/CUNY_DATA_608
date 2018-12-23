@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<head>
+        <!-- Plotly.js -->
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+      </head>
+      <body>
+      <!-- Plotly chart will be drawn inside this DIV -->
+      <div id="myDiv"></div>
+        <script>
+        Plotly.d3.csv("data_MAV20.csv", function(err, rows){
+
+function unpack(rows, key) {
+return rows.map(function(row) { return row[key]; });
+}
+
+
+var trace1 = {
+type: "scatter",
+mode: "lines",
+name: 'BCH_Close',
+x: unpack(rows, 'Date'),
+y: unpack(rows, 'BCH_Close'),
+line: {color: 'red'}
+}
+
+var trace2 = {
+type: "scatter",
+mode: "lines",
+name: 'BCH_MAV20',
+x: unpack(rows, 'Date'),
+y: unpack(rows, 'BCH_MAV20'),
+line: {color: '#7F7F7F'}
+}
+
+
+
+var trace3 = {
+type: "scatter",
+mode: "lines",
+name: 'MKR_Close',
+x: unpack(rows, 'Date'),
+y: unpack(rows, 'MKR_Close'),
+line: {color: '#17BECF'}
+}
+
+var trace4 = {
+type: "scatter",
+mode: "lines",
+name: 'MKR_MAV20',
+x: unpack(rows, 'Date'),
+y: unpack(rows, 'MKR_MAV20'),
+line: {color: '#7F7F7F'}
+}
+
+var trace5 = {
+type: "scatter",
+mode: "lines",
+name: 'ETH_Close',
+x: unpack(rows, 'Date'),
+y: unpack(rows, 'ETH_Close'),
+line: {color: '#17BECF'}
+}
+
+var trace6 = {
+type: "scatter",
+mode: "lines",
+name: 'ETH_MAV20',
+x: unpack(rows, 'Date'),
+y: unpack(rows, 'ETH_MAV20'),
+line: {color: '#7F7F7F'}
+}
+
+var data = [trace1,trace2,trace3,trace4,trace5,trace6];
+  
+var layout = {
+title: '2018 Bitcoin Cash(BCH), Maker(MKR) and Ethereum(ETH)', 
+};
+
+Plotly.newPlot('myDiv', data, layout, {showSendToCloud: true});
+})
+        </script>
+      </body>
+      </html>
