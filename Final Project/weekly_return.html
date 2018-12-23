@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/5EFF8820-8D75-474D-8340-E50BF4C43391/main.js" charset="UTF-8"></script><head>
+<!--Plotly.js-->
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+        <body>
+<div class="showcase__section" id="bubble">
+  <div class="spacer --small"></div>
+  <div id="bubbleplots">
+    <div class="bubbleplot" data-num="0">
+      <div class="plot" id="plotdiv"></div>
+      <div class="control-row">
+        Ctyptocurrency: <select class="weeklyReturn">
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+      
+<script>
+       
+
+
+Plotly.d3.csv('weekly_return.csv', function(err, rows){
+
+    function unpack(rows, key) {
+        return rows.map(function(row) { return row[key]; });
+    }
+
+var coins = unpack(rows, 'Tick'),
+    weeks = unpack(rows, 'Weeks'),
+    rate = unpack(rows, 'Weekly_rate'),
+    coinList = [],
+    currentRate = [],
+    currentWeek = [];
+
+  for (var i = 0; i < coins.length; i++ ){
+    if (coinList.indexOf(coins[i]) === -1 ){
+      coinList.push(coins[i]);
+    }
+  }
+  
+  function getWeeklyReturn(chosenCoin) {
+    currentRate = [];
+    currentWeek = [];
+    for (var i = 0 ; i < coins.length ; i++){
+      if ( coins[i] === chosenCoin ) {
+        currentRate.push(rate[i]);
+        currentWeek.push(weeks[i]);
+      } 
+    }
+  };
+
+// Default Ariline Data
+setBubblePlot('AA');
+  
+function setBubblePlot(chosenCoin) {
+    getWeeklyReturn(chosenCoin);  
+
+    var trace1 = {
+      x: currentWeek,
+      y: currentRate,
+      mode: 'lines+markers',
+      marker: {
+        size: 12, 
+        opacity: 0.5
+      }
+    };
+
+    var data = [trace1];
+
+    var layout = {
+      title: '2018 '+ chosenCoin + ' Weekly Return Rate ' + '(%)'
+    };
+
+    Plotly.newPlot('plotdiv', data, layout, {showSendToCloud: true});
+};
+  
+var innerContainer = document.querySelector('[data-num="0"'),
+    plotEl = innerContainer.querySelector('.plot'),
+    coinSelector = innerContainer.querySelector('.weeklyReturn');
+
+function assignOptions(textArray, selector) {
+  for (var i = 0; i < textArray.length;  i++) {
+      var currentOption = document.createElement('option');
+      currentOption.text = textArray[i];
+      selector.appendChild(currentOption);
+  }
+}
+
+assignOptions(coinList, coinSelector);
+
+function updateCoin(){
+    setBubblePlot(coinSelector.value);
+}
+  
+coinSelector.addEventListener('change', updateCoin, false);
+});
+
+</script>
+        </body>
+</html>
