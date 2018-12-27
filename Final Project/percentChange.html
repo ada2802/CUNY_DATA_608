@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style> 
+
+	body { font: 12px Arial;}
+
+	path {
+	stroke: steelblue;
+		stroke-width: 2;
+		fill: none;
+	}
+
+	.axis path,
+	.axis line {
+		fill: none;
+		stroke: grey;
+		stroke-width: 1;
+		shape-rendering: crispEdges;
+	}
+
+</style>
+
+<body>
+
+<h1 style="margin-left: 2.5em;padding: 0 7em 2em 0;border-width: 2px;">BTC vs ETH 2018 Price Change</h1>
+
+<!-- load the d3.js library -->
+<script src="http://d3js.org/d3.v3.min.js"></script>
+
+<script>
+
+// Set the dimensions of the canvas / graph
+var	margin = {top: 30, right: 20, bottom: 30, left: 50},
+	width = 400 - margin.left - margin.right,
+	height = 220 - margin.top - margin.bottom;
+
+// Parse the date / time
+var	parseDate = d3.time.format("%m/%d/%Y").parse;
+
+// Set the ranges
+var	x = d3.time.scale().range([0, width]);
+var	y = d3.scale.linear().range([height, 0]);
+
+// Define the axes
+var	xAxis = d3.svg.axis().scale(x)
+	.orient("bottom").ticks(5);
+
+var	yAxis = d3.svg.axis().scale(y)
+	.orient("left").ticks(5);
+
+// Define the line
+var	valueline = d3.svg.line()
+	.x(function(d) { return x(d.date); })
+	.y(function(d) { return y(d.bitcoin); });
+
+  // Define the line
+var	valueline2 = d3.svg.line()
+  	.x(function(d) { return x(d.date); })
+  	.y(function(d) { return y(d.eth); });
+
+
+// Adds the svg canvas
+var	chart1 = d3.select("body")
+	.append("svg")
+		.attr("width", width + margin.left + margin.right)
+		.attr("height", height + margin.top + margin.bottom)
+	.append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+ // Graph title
+ chart1.append('text')
+  .attr('x', (width / 2))
+  .attr('y', 0 - (margin.top / 3))
+  .attr('text-anchor', 'middle')
+  .style('font-size', '16px')
+  .text('Bitcoin');
+
+// Get the data
+d3.csv("px.csv", function(error, data) {
+	data.forEach(function(d) {
+		d.date = parseDate(d.date);
+		d.bitcoin = +d.bitcoin;
+    d.eth = +d.eth
+	});
+
+     console.log(data);
+
+	// Scale the range of the data
+	x.domain(d3.extent(data, function(d) { return d.date; }));
+	y.domain([-100, d3.max(data, function(d) { return Math.max(d.bitcoin, d.eth); })]);
+
+
+	// Add the valueline path.
+	chart1.append("path")
+		.attr("class", "line")
+		.attr("d", valueline(data))
+
+  // Add the valueline2 path.
+  chart1.append("path")
+  		.attr("class", "line")
+      .style("stroke", "red")
+  		.attr("d", valueline2(data))
+
+      chart1.append("text")
+    		.attr("transform", "translate(" + (width-5) + "," + y(data[0].bitcoin) + ")")
+    		.attr("dy", ".35em")
+    		.attr("text-anchor", "start")
+    		.style("fill", "red")
+    		.text("Bitcoin");
+
+    	chart1.append("text")
+    		.attr("transform", "translate(" + (width-10) + "," + y(data[0].eth) + ")")
+    		.attr("dy", ".35em")
+    		.attr("text-anchor", "start")
+    		.style("fill", "steelblue")
+    		.text("ETH");
+
+
+	// Add the X Axis
+	chart1.append("g")
+		.attr("class", "x axis")
+		.attr("transform", "translate(0," + height + ")")
+		.call(xAxis);
+
+	// Add the Y Axis
+	chart1.append("g")
+		.attr("class", "y axis")
+		.call(yAxis);
+
+});
+
+
+
+
+
+
+</script>
+</body>
